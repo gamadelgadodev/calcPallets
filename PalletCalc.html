@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Pallets</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label, input {
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora</h1>
+        <form id="calculator">
+            <label for="needed"># need:</label>
+            <input type="number" id="needed" name="needed"><br><br>
+            <label for="length">Length:</label>
+            <input type="number" id="length" name="length" value="8"><br><br>
+            <label for="high">High:</label>
+            <input type="number" id="high" name="high" value="5"><br><br>
+            <label for="between">Between:</label>
+            <input type="number" id="between" name="between"><br><br>
+            <button type="button" onclick="performCalculation()">Get number</button>
+        </form>
+        <h2>Results:</h2>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function performCalculation() {
+            var needed = parseFloat(document.getElementById('needed').value);
+            var length = parseFloat(document.getElementById('length').value);
+            var high = parseFloat(document.getElementById('high').value);
+            var between = parseFloat(document.getElementById('between').value);
+            var stavplay = length * high;
+            let layers = 0;
+            let cic = true;
+            let sublayers = 0;
+            let count = 0;
+
+            while (needed >= stavplay || needed >= ((length * 2) + between)) {
+                if (cic) {
+                    needed -= stavplay;
+                    cic = false;
+                    layers++;
+                } else {
+                    needed -= between;
+                    count += between;
+                    cic = true;
+                    if (needed < stavplay)
+                        break;
+                }
+            }
+
+            if (needed == 0) {
+                needed = "close number of layers";
+            } else {
+                sublayers = Math.ceil(needed / length);
+            }
+
+            document.getElementById('result').innerHTML =
+                'Layers: ' + layers + '<br>' +
+                'Last layer: ' + needed + '<br>' +
+                'Sublayer: ' + sublayers + '<br>' +
+                'Between: ' + count + '<br>';
+        }
+    </script>
+</body>
+</html>
